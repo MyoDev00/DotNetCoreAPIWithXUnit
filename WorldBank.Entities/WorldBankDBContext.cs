@@ -10,6 +10,16 @@ namespace WorldBank.Entities
 {
     public class WorldBankDBContext:DbContext
     {
+        public WorldBankDBContext()
+        {
+            
+        }
+        public WorldBankDBContext(DbContextOptions<WorldBankDBContext> options)
+          : base(options)
+        {
+            //Database.EnsureCreated();
+        }
+
         public virtual DbSet<AuditTypes> AuditTypes { get; set; }
         public virtual DbSet<BankAccount> BankAccount { get; set; }
         public virtual DbSet<BankAccountLedger> BankAccountLedger { get; set; }

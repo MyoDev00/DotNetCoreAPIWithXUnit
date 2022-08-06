@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using WorldBank.API.Business;
 using WorldBank.API.Helper;
 using WorldBank.Entities;
 using WorldBank.UnitOfWork;
@@ -21,7 +22,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 options.UseSqlServer(connectionString);
 
             });
-            services.AddTransient<IUnitOfWork<WorldBankDBContext>, UnitOfWork<WorldBankDBContext>>();
+            services.AddTransient<IUnitOfWork, UnitOfWork<WorldBankDBContext>>();
             #endregion
 
             #region Authentication
@@ -40,7 +41,7 @@ namespace Microsoft.Extensions.DependencyInjection
                         };
                     });
 
-            services.AddSingleton<JWTTokenHelper>(jwt =>
+            services.AddTransient<JWTTokenHelper>(jwt =>
                 new JWTTokenHelper(new JWTTokenHelperParameters
                 {
                     JwtKey = configuration["JWT:SecurityKey"],
@@ -51,7 +52,7 @@ namespace Microsoft.Extensions.DependencyInjection
             #endregion
 
             #region BusinessLogic
-
+            services.AddTransient<IAuthenticationBL, AuthenticationBL>();
             #endregion
             return services;
         }

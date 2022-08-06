@@ -68,9 +68,9 @@ namespace WorldBank.API.Helper
             var payload = handler.ValidateToken(token, validationParameters, out validatedToken);
 
             if (payload != null)
-                return false;
-            else
                 return true;
+            else
+                return false;
         }
     }
 

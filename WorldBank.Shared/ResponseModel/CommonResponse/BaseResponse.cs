@@ -2,11 +2,6 @@
 {
     public class BaseResponse<T>
     {
-        public BaseResponse()
-        {
-            Error = new Error();
-        }
-
         public Error Error { get; set; }
         /// <summary>
         /// Response data

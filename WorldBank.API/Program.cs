@@ -7,7 +7,9 @@ builder.Services.AddControllers();
 builder.Logging.ClearProviders();
 builder.Services.AddLogging();
 
+
 ConfigurationManager configuration = builder.Configuration;
+
 builder.Services.AddAppServices(configuration);
 
 var app = builder.Build();
@@ -16,7 +18,7 @@ app.ConfigureExceptionHandler();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
+app.UseAuthentication();
 app.MapControllers();
 
 app.Run();
