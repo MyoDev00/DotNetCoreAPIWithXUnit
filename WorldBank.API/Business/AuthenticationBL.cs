@@ -77,11 +77,13 @@ namespace WorldBank.API.Business
             }
             else
             {
-                response.Error = new Error
+                response.Error = new List<Error>();
+                response.Error.Add(
+                new Error()
                 {
                     ErrorCode = ErrorCode.LoginFailed,
                     ErrorMessage = ErrorMessage.LoginFailed
-                };
+                });
                 return response;
             }
         }

@@ -6,12 +6,14 @@ namespace WorldBank.Shared.ResponseModel.CommonResponse
     {
         public ErrorResponse(string errorCode, string errorMessage)
         {
-            Error = new Error { ErrorCode = errorCode, ErrorMessage = errorMessage };
+            Error = new List<Error>();
+            Error.Add(new Error { ErrorCode = errorCode, ErrorMessage = errorMessage });
         }
 
         public ErrorResponse(Error errors)
         {
-            Error = errors;
+            Error = new List<Error>();
+            Error.Add(errors);
         }
 
         public override string ToString()

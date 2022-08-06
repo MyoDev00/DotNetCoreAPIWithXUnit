@@ -69,7 +69,7 @@ namespace WorldBank.API.Test
             else
             {
                 Assert.NotNull(response.Error);
-                Assert.Equal(ErrorCode.LoginFailed, response.Error.ErrorCode);
+                Assert.Equal(ErrorCode.LoginFailed, response.Error[0].ErrorCode);
                 Assert.Null(response.Responsedata);
             }
         }

@@ -2,7 +2,7 @@
 {
     public class BaseResponse<T>
     {
-        public Error Error { get; set; }
+        public List<Error> Error { get; set; }
         /// <summary>
         /// Response data
         /// </summary>
@@ -10,6 +10,7 @@
     }
     public class Error
     {
+        public string FieldName { get; set; }
         public string ErrorCode { get; set; }
         public string ErrorMessage { get; set; }
     }

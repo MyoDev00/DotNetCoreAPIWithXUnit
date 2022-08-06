@@ -104,19 +104,6 @@ namespace WorldBank.Entities
                     .HasColumnType("datetime")
                     .HasColumnName("updated_on");
 
-                entity.HasOne(d => d.BankAccountTypeNavigation)
-                    .WithMany(p => p.BankAccount)
-                    .HasPrincipalKey(p => p.BankAccountType)
-                    .HasForeignKey(d => d.BankAccountType)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__bank_acco__bank___3B40CD36");
-
-                entity.HasOne(d => d.Currency)
-                    .WithMany(p => p.BankAccount)
-                    .HasForeignKey(d => d.CurrencyId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__bank_acco__curre__3C34F16F");
-
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.BankAccount)
                     .HasForeignKey(d => d.CustomerId)
@@ -206,12 +193,6 @@ namespace WorldBank.Entities
                 entity.Property(e => e.CurrencyId)
                     .ValueGeneratedNever()
                     .HasColumnName("currency_id");
-
-                entity.Property(e => e.Currency1)
-                    .IsRequired()
-                    .HasMaxLength(5)
-                    .IsUnicode(false)
-                    .HasColumnName("currency");
 
                 entity.Property(e => e.CurrencySymbol)
                     .IsRequired()
