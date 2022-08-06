@@ -3,14 +3,18 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using WorldBank.API.Helper;
+using WorldBank.API.Middleware;
 using WorldBank.Entities;
 using WorldBank.UnitOfWork;
 
 var builder = WebApplication.CreateBuilder(args);
-ConfigurationManager configuration = builder.Configuration;
-// Add services to the container.
 
+// Add services to the container.
 builder.Services.AddControllers();
+builder.Logging.ClearProviders();
+builder.Services.AddLogging();
+
+ConfigurationManager configuration = builder.Configuration;
 
 
 builder.Services.AddDbContext<WorldBankDBContext>(options =>
@@ -47,9 +51,8 @@ builder.Services.AddSingleton<JWTTokenHelper>(jwt =>
 
 
 var app = builder.Build();
-
+app.ConfigureExceptionHandler();
 // Configure the HTTP request pipeline.
-
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
