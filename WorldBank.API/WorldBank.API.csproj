@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.7" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\WorldBank.Entities\WorldBank.Entities.csproj" />
     <ProjectReference Include="..\WorldBank.Shared\WorldBank.Shared.csproj" />
     <ProjectReference Include="..\WorldBank.UnitOfWork\WorldBank.UnitOfWork.csproj" />

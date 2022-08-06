@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WorldBank.Entities.DataModel;
 
-namespace WorldBank.Entities.DataModel
+namespace WorldBank.Entities
 {
     public class WorldBankDBContext:DbContext
     {
