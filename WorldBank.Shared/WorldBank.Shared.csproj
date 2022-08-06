@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -9,8 +9,6 @@
   <ItemGroup>
     <Folder Include="Constant\" />
     <Folder Include="Helper\" />
-    <Folder Include="RequestModel\CommonRequest\" />
-    <Folder Include="ResponseModel\CommonResponse\" />
     <Folder Include="Utilities\" />
   </ItemGroup>
 
