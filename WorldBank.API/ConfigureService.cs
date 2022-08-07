@@ -41,7 +41,7 @@ namespace Microsoft.Extensions.DependencyInjection
                         };
                     });
 
-            services.AddTransient<JWTTokenHelper>(jwt =>
+            services.AddTransient(jwt =>
                 new JWTTokenHelper(new JWTTokenHelperParameters
                 {
                     JwtKey = configuration["JWT:SecurityKey"],
@@ -53,6 +53,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
             #region BusinessLogic
             services.AddTransient<IAuthenticationBL, AuthenticationBL>();
+            services.AddTransient<ICustomerBL, CustomerBL>();
             #endregion
             return services;
         }

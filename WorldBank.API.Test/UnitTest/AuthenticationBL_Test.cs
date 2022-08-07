@@ -10,7 +10,7 @@ using WorldBank.Shared.RequestModel;
 using WorldBank.UnitOfWork;
 using static WorldBank.Shared.Constant.Constant;
 
-namespace WorldBank.API.Test
+namespace WorldBank.API.Test.UnitTest
 {
     public class AuthenticationBL_Test
     {

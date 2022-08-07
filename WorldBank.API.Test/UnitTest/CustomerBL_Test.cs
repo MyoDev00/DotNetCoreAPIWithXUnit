@@ -1,18 +1,11 @@
 ﻿using AutoMapper;
 using Moq;
 using Shouldly;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WorldBank.API.Business;
-using WorldBank.API.Helper;
 using WorldBank.API.Test.Mock;
 using WorldBank.Entities;
 using WorldBank.Entities.DataModel;
-using WorldBank.Shared.Constant;
+using WorldBank.Shared.Helper;
 using WorldBank.Shared.RequestModel;
 using WorldBank.Shared.ResponseModel;
 using WorldBank.Shared.ResponseModel.CommonResponse;
@@ -25,19 +18,23 @@ namespace WorldBank.API.Test.UnitTest
     {
         UnitOfWork<WorldBankDBContext> unitOfWork;
         CustomerBL customerBL;
-        Guid? customer1Id=null,customer2Id;
-
+        string encryptionKey;
         public CustomerBL_Test()
         {
+            encryptionKey = "E@8s8Jdi*#sdIU0";
+
             var customerList = MockData.GetCustomerData();
-            customer1Id = customerList[0].CustomerId;
-            customer2Id = customerList[1].CustomerId;
+            customerList.ForEach(x => { 
+                x.Email = StringHelper.Encrypt(x.Email, encryptionKey);
+                x.Mobile = StringHelper.Encrypt(x.Mobile, encryptionKey);
+                x.IdentityCardNo = StringHelper.Encrypt(x.IdentityCardNo, encryptionKey);
+            });
 
             var mockDataSet = new MockDbSet<Customer>(customerList);
             var mockContext = new Mock<WorldBankDBContext>();
             mockContext.Setup(c => c.Set<Customer>()).Returns(mockDataSet.Object);
             unitOfWork = new UnitOfWork<WorldBankDBContext>(mockContext.Object);
-            customerBL = new CustomerBL(unitOfWork);
+            customerBL = new CustomerBL(unitOfWork, encryptionKey);
         }
 
         [Theory]
@@ -166,6 +163,10 @@ namespace WorldBank.API.Test.UnitTest
             };
 
             var exceptedResponse = mapper.Map<PostCustomerResponse>(request);
+            exceptedResponse.Email = StringHelper.Encrypt(exceptedResponse.Email, encryptionKey);
+            exceptedResponse.Mobile = StringHelper.Encrypt(exceptedResponse.Mobile, encryptionKey);
+            exceptedResponse.IdentityCardNo = StringHelper.Encrypt(exceptedResponse.IdentityCardNo, encryptionKey);
+
 
             var response = await customerBL.PostCustomer(request);
             Assert.NotNull(response);
