@@ -14,10 +14,8 @@ namespace WorldBank.Shared.ResponseModel
         public string MobileCode { get; set; }
         public string Mobile { get; set; }
         public string IdentityCardNo { get; set; }
-        public string Password { get; set; }
         public int Status { get; set; }
 
-        public List<BankAccountResponse> bankAccounts { get; set; }
     }
 
    

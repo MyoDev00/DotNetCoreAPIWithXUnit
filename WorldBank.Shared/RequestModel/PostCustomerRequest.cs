@@ -30,7 +30,7 @@ namespace WorldBank.Shared.RequestModel
         [Required]
         public int Status { get; set; }
 
-        public string BankAccountType { get; set; }
+        public Guid BankAccountTypeId { get; set; }
         public Guid CurrencyId { get; set; }
     }
 }

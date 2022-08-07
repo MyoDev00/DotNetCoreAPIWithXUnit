@@ -8,11 +8,16 @@ using static WorldBank.Shared.Constant.Constant;
 
 namespace WorldBank.API.Test
 {
-    public static class MockData
+    public class MockData
     {
-        public static List<Customer> GetCustomerData()
+        public List<Customer> Customers { get; set; }
+        public List<BankAccountTypes> BankAccountTypes { get; set; }
+        public List<Currency> Currencies { get; set; }
+        public List<BankAccount> BankAccounts { get; set; }
+
+        public MockData()
         {
-            return (new List<Customer>
+            Customers = new List<Customer>
             {
                 new Customer{ CustomerId=Guid.Parse("1A111111-1111-1111-1111-111111111111")
                     ,FullName="C 1"
@@ -22,7 +27,8 @@ namespace WorldBank.API.Test
                     ,IdentityCardNo="IC0001"
                     ,Status=(int)CommonStatus.Active
                     ,CreatedOn=DateTime.Now
-                    ,UpdatedOn=DateTime.Now},
+                    ,UpdatedOn=DateTime.Now
+                },
 
                 new Customer{ CustomerId=Guid.Parse("2A222222-2222-2222-2222-222222222222")
                     ,FullName="C 2"
@@ -53,42 +59,57 @@ namespace WorldBank.API.Test
                     ,Status=(int)CommonStatus.Deleted
                     ,CreatedOn=DateTime.Now.AddDays(3)
                     ,UpdatedOn=DateTime.Now.AddDays(3)},
-            });
-        }
+            };
 
-        public static List<BankAccountTypes> GetBankAccountTypes()
-        {
-            return (new List<BankAccountTypes>{
+            BankAccountTypes = new List<BankAccountTypes>{
                 new BankAccountTypes
                 {
+                    BankAccountTypeId = Guid.NewGuid(),
                     BankAccountType="Saving",
                     Description="Saving Account"
                 },
                 new BankAccountTypes
                 {
+                    BankAccountTypeId = Guid.NewGuid(),
                     BankAccountType="FixDeposit",
                     Description="Fixed deposit account"
                 }
-            });
-        }
+            };
 
-        public static List<Currency> GetCurrencies()
-        {
-            return (new List<Currency>
+            Currencies = new List<Currency>
             {
                 new Currency
                 {
                     CurrencyId = Guid.Parse("BA111111-1111-1111-1111-111111111111"),
-                    CurrencySymbol = "THB",
+                    CurrencyCode="THB",
+                    CurrencySymbol = "฿",
                     Description = "Thai Baht"
                 },
                 new Currency
                 {
                     CurrencyId = Guid.Parse("2D111111-1111-1111-1111-111111111111"),
                     CurrencySymbol = "USD",
-                    Description = "United States Dollar"
+                    Description = "United State Dollar"
                 },
-            });
+            };
+
+            BankAccounts = new List<BankAccount>()
+        {
+             new BankAccount()
+                {
+                    BankAccountId = Guid.NewGuid(),
+                    BankAccountTypeId =BankAccountTypes[0].BankAccountTypeId,
+                    CurrencyId= Currencies[0].CurrencyId,
+                    IbanNumber = "NL24ABNA3526558027",
+                    CustomerId = Customers[0].CustomerId,
+                    Status = (int)CommonStatus.Active,
+                    ClosingBalance=0,
+                    TotalCredit =0,
+                    TotalDebit =0,
+                }
+        };
         }
+
+
     }
 }

@@ -36,7 +36,7 @@ namespace WorldBank.Entities
             modelBuilder.Entity<AuditTypes>(entity =>
             {
                 entity.HasKey(e => e.AuditTypeId)
-                    .HasName("PK__audit_ty__8F8EB2E1C7E29A56");
+                    .HasName("PK__audit_ty__8F8EB2E1A4C3B127");
 
                 entity.ToTable("audit_types");
 
@@ -70,11 +70,7 @@ namespace WorldBank.Entities
                     .ValueGeneratedNever()
                     .HasColumnName("bank_account_id");
 
-                entity.Property(e => e.BankAccountType)
-                    .IsRequired()
-                    .HasMaxLength(10)
-                    .IsUnicode(false)
-                    .HasColumnName("bank_account_type");
+                entity.Property(e => e.BankAccountTypeId).HasColumnName("bank_account_type_id");
 
                 entity.Property(e => e.ClosingBalance)
                     .HasColumnType("money")
@@ -104,17 +100,25 @@ namespace WorldBank.Entities
                     .HasColumnType("datetime")
                     .HasColumnName("updated_on");
 
+                entity.HasOne(d => d.BankAccountType)
+                    .WithMany(p => p.BankAccount)
+                    .HasForeignKey(d => d.BankAccountTypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_bank_account_bank_account_types");
+
+               
+
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.BankAccount)
                     .HasForeignKey(d => d.CustomerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__bank_acco__custo__3A4CA8FD");
+                    .HasConstraintName("FK__bank_acco__custo__34C8D9D1");
             });
 
             modelBuilder.Entity<BankAccountLedger>(entity =>
             {
                 entity.HasKey(e => e.LedgerId)
-                    .HasName("PK__bank_acc__97EDEDA13A63EAA3");
+                    .HasName("PK__bank_acc__97EDEDA1527394AA");
 
                 entity.ToTable("bank_account_ledger");
 
@@ -134,36 +138,15 @@ namespace WorldBank.Entities
 
                 entity.Property(e => e.TransactionId).HasColumnName("transaction_id");
 
-                entity.Property(e => e.TransactionType)
-                    .IsRequired()
-                    .HasMaxLength(10)
-                    .IsUnicode(false)
-                    .HasColumnName("transaction_type");
+                entity.Property(e => e.TransactionTypeId).HasColumnName("transaction_type_id");
 
-                entity.HasOne(d => d.BankAccount)
-                    .WithMany(p => p.BankAccountLedger)
-                    .HasForeignKey(d => d.BankAccountId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__bank_acco__bank___41EDCAC5");
-
-                entity.HasOne(d => d.Transaction)
-                    .WithMany(p => p.BankAccountLedger)
-                    .HasForeignKey(d => d.TransactionId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__bank_acco__trans__40058253");
-
-                entity.HasOne(d => d.TransactionTypeNavigation)
-                    .WithMany(p => p.BankAccountLedger)
-                    .HasPrincipalKey(p => p.TransactionType)
-                    .HasForeignKey(d => d.TransactionType)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__bank_acco__trans__40F9A68C");
+               
             });
 
             modelBuilder.Entity<BankAccountTypes>(entity =>
             {
                 entity.HasKey(e => e.BankAccountTypeId)
-                    .HasName("PK__bank_acc__472D068F2FE2F9F5");
+                    .HasName("PK__bank_acc__472D068FCD4F2D9A");
 
                 entity.ToTable("bank_account_types");
 
@@ -193,6 +176,12 @@ namespace WorldBank.Entities
                 entity.Property(e => e.CurrencyId)
                     .ValueGeneratedNever()
                     .HasColumnName("currency_id");
+
+                entity.Property(e => e.CurrencyCode)
+                    .IsRequired()
+                    .HasMaxLength(5)
+                    .IsUnicode(false)
+                    .HasColumnName("currency_code");
 
                 entity.Property(e => e.CurrencySymbol)
                     .IsRequired()
@@ -309,7 +298,7 @@ namespace WorldBank.Entities
             modelBuilder.Entity<StaffAuditLog>(entity =>
             {
                 entity.HasKey(e => e.StaffAuditId)
-                    .HasName("PK__staff_au__D1CDE40E06130DFA");
+                    .HasName("PK__staff_au__D1CDE40E4FEE5CAF");
 
                 entity.ToTable("staff_audit_log");
 
@@ -317,11 +306,7 @@ namespace WorldBank.Entities
                     .ValueGeneratedNever()
                     .HasColumnName("staff_audit_id");
 
-                entity.Property(e => e.AuditType)
-                    .IsRequired()
-                    .HasMaxLength(10)
-                    .IsUnicode(false)
-                    .HasColumnName("audit_type");
+                entity.Property(e => e.AuditTypeId).HasColumnName("audit_type_id");
 
                 entity.Property(e => e.Note)
                     .IsRequired()
@@ -332,18 +317,17 @@ namespace WorldBank.Entities
 
                 entity.Property(e => e.StaffId).HasColumnName("staff_id");
 
-                entity.HasOne(d => d.AuditTypeNavigation)
+                entity.HasOne(d => d.AuditType)
                     .WithMany(p => p.StaffAuditLog)
-                    .HasPrincipalKey(p => p.AuditType)
-                    .HasForeignKey(d => d.AuditType)
+                    .HasForeignKey(d => d.AuditTypeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__staff_aud__audit__43D61337");
+                    .HasConstraintName("FK_staff_audit_log_audit_types");
 
                 entity.HasOne(d => d.Staff)
                     .WithMany(p => p.StaffAuditLog)
                     .HasForeignKey(d => d.StaffId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__staff_aud__staff__42E1EEFE");
+                    .HasConstraintName("FK__staff_aud__staff__3D5E1FD2");
             });
 
             modelBuilder.Entity<Transaction>(entity =>
@@ -393,36 +377,27 @@ namespace WorldBank.Entities
                     .IsUnicode(false)
                     .HasColumnName("transaction_no");
 
-                entity.Property(e => e.TransactionType)
-                    .IsRequired()
-                    .HasMaxLength(10)
-                    .IsUnicode(false)
-                    .HasColumnName("transaction_type");
+                entity.Property(e => e.TransactionTypeId).HasColumnName("transaction_type_id");
 
                 entity.HasOne(d => d.BankAccount)
                     .WithMany(p => p.Transaction)
                     .HasForeignKey(d => d.BankAccountId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__transacti__bank___3F115E1A");
+                    .HasConstraintName("FK_transaction_bank_account_id");
 
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.Transaction)
                     .HasForeignKey(d => d.CustomerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__transacti__custo__3E1D39E1");
+                    .HasConstraintName("FK_transaction_customer_id");
 
-                entity.HasOne(d => d.TransactionTypeNavigation)
-                    .WithMany(p => p.Transaction)
-                    .HasPrincipalKey(p => p.TransactionType)
-                    .HasForeignKey(d => d.TransactionType)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__transacti__trans__3D2915A8");
+               
             });
 
             modelBuilder.Entity<TransactionTypes>(entity =>
             {
                 entity.HasKey(e => e.TransactionTypeId)
-                    .HasName("PK__transact__439ABFC1C182596D");
+                    .HasName("PK__transact__439ABFC1812B89B3");
 
                 entity.ToTable("transaction_types");
 
@@ -445,7 +420,6 @@ namespace WorldBank.Entities
                     .HasColumnName("transaction_type");
             });
 
-            
         }
 
     }

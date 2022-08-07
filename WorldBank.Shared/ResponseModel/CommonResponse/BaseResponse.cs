@@ -2,6 +2,15 @@
 {
     public class BaseResponse<T>
     {
+        public BaseResponse()
+        {
+
+        }
+        public BaseResponse(string errorCode,string errorMessage,string fieldName="")
+        {
+            Error = new List<Error>();
+            Error.Add(new Error { ErrorCode = errorCode, ErrorMessage = errorMessage, FieldName = fieldName });
+        }
         public List<Error> Error { get; set; }
         /// <summary>
         /// Response data
