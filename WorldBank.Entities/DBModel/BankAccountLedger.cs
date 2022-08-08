@@ -1,5 +1,7 @@
 ﻿
 #nullable disable
+using System;
+using System.Collections.Generic;
 
 namespace WorldBank.Entities.DataModel
 {
@@ -7,13 +9,11 @@ namespace WorldBank.Entities.DataModel
     {
         public Guid LedgerId { get; set; }
         public Guid TransactionId { get; set; }
-        public string TransactionType { get; set; }
+        public Guid TransactionTypeId { get; set; }
         public Guid BankAccountId { get; set; }
         public decimal Debit { get; set; }
         public decimal Credit { get; set; }
 
-        public virtual BankAccount BankAccount { get; set; }
-        public virtual Transaction Transaction { get; set; }
-        public virtual TransactionTypes TransactionTypeNavigation { get; set; }
+        public virtual TransactionTypes TransactionType { get; set; }
     }
 }

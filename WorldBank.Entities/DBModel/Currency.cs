@@ -1,5 +1,7 @@
 ﻿
 #nullable disable
+using System;
+using System.Collections.Generic;
 
 namespace WorldBank.Entities.DataModel
 {
@@ -7,14 +9,12 @@ namespace WorldBank.Entities.DataModel
     {
         public Currency()
         {
-            BankAccount = new HashSet<BankAccount>();
         }
 
         public Guid CurrencyId { get; set; }
-        public string Currency1 { get; set; }
+        public string CurrencyCode { get; set; }
         public string CurrencySymbol { get; set; }
         public string Description { get; set; }
 
-        public virtual ICollection<BankAccount> BankAccount { get; set; }
     }
 }

@@ -2,10 +2,14 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Net.Http.Headers;
 using System.Text;
+using WorldBank.API.Business;
 using WorldBank.API.Helper;
 using WorldBank.Entities;
+using WorldBank.Shared.ResponseModel.CommonResponse;
 using WorldBank.UnitOfWork;
+using static WorldBank.Shared.Constant.Constant;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -21,7 +25,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 options.UseSqlServer(connectionString);
 
             });
-            services.AddTransient<IUnitOfWork<WorldBankDBContext>, UnitOfWork<WorldBankDBContext>>();
+            services.AddTransient<IUnitOfWork, UnitOfWork<WorldBankDBContext>>();
             #endregion
 
             #region Authentication
@@ -38,9 +42,30 @@ namespace Microsoft.Extensions.DependencyInjection
                             ValidAudience = configuration["JWT:Audience"],
                             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:SecurityKey"])),
                         };
+                        options.Events = new JwtBearerEvents
+                        {
+                            OnChallenge = async context =>
+                            {
+                                var tmp = configuration["JWT:Issuer"];
+                                tmp = configuration["JWT:Audience"];
+                                tmp = configuration["JWT:SecurityKey"];
+                                var t = context.Request.Headers["Authorization"];
+                                // Override the response status code.
+                                context.Response.StatusCode = 401;
+                                // Emit the WWW-Authenticate header.
+                                context.Response.Headers.Add(
+                                     HeaderNames.WWWAuthenticate,
+                                     context.Options.Challenge);
+                                string responseBody = Newtonsoft.Json.JsonConvert.SerializeObject(new ErrorResponse(ErrorCode.UnAuthorize,ErrorMessage.UnAuthorize));
+                                byte[] finalBytes = Encoding.UTF8.GetBytes(responseBody);
+                                await context.Response.Body.WriteAsync(finalBytes);
+                                context.HandleResponse();
+                            }
+
+                        };
                     });
 
-            services.AddSingleton<JWTTokenHelper>(jwt =>
+            services.AddTransient(jwt =>
                 new JWTTokenHelper(new JWTTokenHelperParameters
                 {
                     JwtKey = configuration["JWT:SecurityKey"],
@@ -51,7 +76,9 @@ namespace Microsoft.Extensions.DependencyInjection
             #endregion
 
             #region BusinessLogic
-
+            
+            services.AddTransient<IAuthenticationBL, AuthenticationBL>();
+            services.AddTransient<ICustomerBL, CustomerBL>();
             #endregion
             return services;
         }
