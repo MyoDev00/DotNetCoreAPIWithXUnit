@@ -15,9 +15,6 @@ namespace WorldBank.API.Business
     public interface ICustomerBL
     {
         public Task<BaseResponse<PostCustomerResponse>> PostCustomer(PostCustomerRequest request);
-        public bool CheckEmailExist(string email);
-        public bool CheckMobileExist( string mobileCode,string mobile);
-        public bool CheckIdentityNumberExist(string identityNo);
         public Task<BaseResponse<PutCustomerResponse>> PutCustomer(PutCustomerRequest request);
     }
     public class CustomerBL : ICustomerBL
@@ -59,7 +56,6 @@ namespace WorldBank.API.Business
         public bool CheckEmailExist(string email)
         {
             var encryptedEmail = StringHelper.Encrypt(email, encryptionKey);
-            var tmp = unitOfWork.GetRepository<Customer>().GetAll().ToList();
 
             var isAny = unitOfWork.GetRepository<Customer>().GetByCondition(c => c.Email == encryptedEmail).Any();
             return isAny;

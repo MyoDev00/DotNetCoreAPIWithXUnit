@@ -9,8 +9,8 @@ namespace WorldBank.Entities.DataModel
     {
         public Customer()
         {
-            BankAccount = new HashSet<BankAccount>();
-            Transaction = new HashSet<Transaction>();
+            BankAccount = new List<BankAccount>();
+            Transaction = new List<Transaction>();
         }
 
         public Guid CustomerId { get; set; }
@@ -25,7 +25,7 @@ namespace WorldBank.Entities.DataModel
         public DateTime CreatedOn { get; set; }
         public DateTime UpdatedOn { get; set; }
 
-        public virtual ICollection<BankAccount> BankAccount { get; set; }
-        public virtual ICollection<Transaction> Transaction { get; set; }
+        public virtual IList<BankAccount> BankAccount { get; set; }
+        public virtual IList<Transaction> Transaction { get; set; }
     }
 }

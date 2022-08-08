@@ -26,7 +26,9 @@ namespace WorldBank.Shared.Constant
             public const string IBANNumberGenerationFailed = "IBANFailed";
             public const string CustomerNotFound = "CustomerNF";
 
-
+            public const string InvalidAmount = "InvalidAmount";
+            public const string AcoountIsInactive = "AccountInactive";
+            public const string NotEnoughBalance = "NotEnoughBalance";
         }
 
         public struct ErrorMessage
@@ -40,6 +42,10 @@ namespace WorldBank.Shared.Constant
             public const string IdentityAlreadyUsed = "Identity number already used";
             public const string IBANNumberGenerationFailed = "Failed to generate IBAN Number";
             public const string CustomerNotFound = "Customer not found";
+
+            public const string InvalidAmount = "Inavlid Amount!";
+            public const string AcoountIsInactive = "Customer or bank account is inactive!";
+            public const string NotEnoughBalance = "Not Enough Balance.";
         }
 
         public struct ErrorFieldName
@@ -47,11 +53,31 @@ namespace WorldBank.Shared.Constant
             public const string Email = "Email";
             public const string Mobile = "Mobile";
             public const string IdentityCardNo = "IdentityCardNo";
+            public const string InvalidAmount = "Amount";
+            public const string CustomerNotFound = "CustomerId";
+            public const string NotEnoughBalance = "Amount";
         }
         public struct CustomClaims
         {
             public const string Name = "Name";
             public const string AccountId = "AccountId";
+        }
+
+        public struct TransactionType
+        {
+            public const string BankDeposit = "BankDeposit";
+            public const string FundTransfer = "FundTransfer";
+        }
+        public struct TransactionChargeTypes
+        {
+            public const string BankDeposit="BankDeposit";
+            public const string FundTransfer = "FundTransfer";
+        }
+
+        public struct AuditType
+        {
+            public const string BankDeposit = "BankDeposit";
+            public const string FundTransfer = "FundTransfer";
         }
     }
 }

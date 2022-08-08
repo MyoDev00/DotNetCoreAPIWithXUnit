@@ -30,9 +30,53 @@ namespace WorldBank.Entities
         public virtual DbSet<StaffAuditLog> StaffAuditLog { get; set; }
         public virtual DbSet<Transaction> Transaction { get; set; }
         public virtual DbSet<TransactionTypes> TransactionTypes { get; set; }
+        public virtual DbSet<TransactionCharges> TransactionCharges { get; set; }
+        public virtual DbSet<GeneratedTransactionNumber> GeneratedTransactionNumbers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<GeneratedTransactionNumber>(entity =>
+            {
+                entity.HasKey(e => e.TransactionNo)
+                   .HasName("PK_GeneratedTransactionNumber");
+
+                entity.ToTable("generated_transaction_number");
+
+                entity.Property(e => e.TransactionNo).HasColumnName("transaction_no");
+
+                entity.Property(e => e.GeneratedNo)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("generated_no");
+            });
+
+            modelBuilder.Entity<TransactionCharges>(entity =>
+            {
+                entity.ToTable("transaction_charges");
+
+                entity.Property(e => e.TransactionChargesId)
+                    .ValueGeneratedNever()
+                    .HasColumnName("transaction_charges_id");
+
+                entity.Property(e => e.ChargesType)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("charges_type");
+
+                entity.Property(e => e.Description)
+                    .IsRequired()
+                    .HasMaxLength(300)
+                    .HasColumnName("description");
+
+                entity.Property(e => e.Percentage)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("percentage");
+
+                entity.Property(e => e.UpdatedOn)
+                    .HasColumnType("datetime")
+                    .HasColumnName("updated_on");
+            });
             modelBuilder.Entity<AuditTypes>(entity =>
             {
                 entity.HasKey(e => e.AuditTypeId)
@@ -307,6 +351,7 @@ namespace WorldBank.Entities
                     .HasColumnName("staff_audit_id");
 
                 entity.Property(e => e.AuditTypeId).HasColumnName("audit_type_id");
+                entity.Property(e => e.CreatedOn).HasColumnName("created_on");
 
                 entity.Property(e => e.Note)
                     .IsRequired()
