@@ -1,0 +1,597 @@
+{
+	"info": {
+		"_postman_id": "0d089b31-d891-405c-a130-a4c6b2d2b047",
+		"name": "WorldBank",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8506435"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"postman.setEnvironmentVariable(\"token\", jsonData.responsedata.authorizeToken);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"LoginId\":\"admin\",\r\n    \"Password\":\"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-url}}/Authentication/Login",
+							"host": [
+								"{{api-url}}"
+							],
+							"path": [
+								"Authentication",
+								"Login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"FullName\": \"Customer B\",\r\n    \"Email\": \"customerB@gmail.com\",\r\n    \"MobileCode\": \"+95\",\r\n    \"Mobile\": \"111112\",\r\n    \"IdentityCardNo\": \"ID002\",\r\n    \"Password\": \"test12345\",\r\n    \"Status\": 1,\r\n    \"BankAccountTypeId\": \"AC47CBD8-630C-4616-B11D-8B0A454098FD\",\r\n    \"CurrencyId\": \"FC3A0BA5-0507-455D-ADCE-429F35979B91\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-url}}/CustomerManagement/Customer",
+							"host": [
+								"{{api-url}}"
+							],
+							"path": [
+								"CustomerManagement",
+								"Customer"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"FullName\": \"Customer A\",\r\n    \"Email\": \"customerA@gmail.com\",\r\n    \"MobileCode\": \"+95\",\r\n    \"Mobile\": \"11111\",\r\n    \"IdentityCardNo\": \"ID001\",\r\n    \"Password\": \"test12345\",\r\n    \"Status\": 1,\r\n    \"BankAccountTypeId\": \"AC47CBD8-630C-4616-B11D-8B0A454098FD\",\r\n    \"CurrencyId\": \"FC3A0BA5-0507-455D-ADCE-429F35979B91\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-url}}/CustomerManagement/Customer",
+									"host": [
+										"{{api-url}}"
+									],
+									"path": [
+										"CustomerManagement",
+										"Customer"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 07 Aug 2022 19:10:50 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": null,\n    \"responsedata\": {\n        \"customerId\": \"bab6f619-192a-4c79-a627-9af76e28518c\",\n        \"fullName\": \"Customer A\",\n        \"email\": \"customerA@gmail.com\",\n        \"mobileCode\": \"+95\",\n        \"mobile\": \"11111\",\n        \"identityCardNo\": \"ID001\",\n        \"status\": 1,\n        \"createdOn\": \"2022-08-08T02:10:46.0796003+07:00\",\n        \"updatedOn\": \"2022-08-08T02:10:46.0796024+07:00\",\n        \"bankAccounts\": [\n            {\n                \"bankAccountId\": \"edf93931-1e87-4395-96f7-fa6fa54782d2\",\n                \"ibanNumber\": \"NL81INGB5595284773\",\n                \"bankAccountTypeId\": \"ac47cbd8-630c-4616-b11d-8b0a454098fd\",\n                \"bankAccountType\": \"Saving\",\n                \"bankAccountTypeDescription\": \"Saving Account\",\n                \"closingBalance\": 0,\n                \"currencyId\": \"fc3a0ba5-0507-455d-adce-429f35979b91\",\n                \"currencySymbol\": \"฿\",\n                \"currencyDescryption\": \"Thai Baht\",\n                \"status\": 1\n            }\n        ]\n    }\n}"
+						},
+						{
+							"name": "Fail->Conflit Data",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"FullName\": \"Customer A\",\r\n    \"Email\": \"customerA@gmail.com\",\r\n    \"MobileCode\": \"+95\",\r\n    \"Mobile\": \"11111\",\r\n    \"IdentityCardNo\": \"ID001\",\r\n    \"Password\": \"test12345\",\r\n    \"Status\": 1,\r\n    \"BankAccountTypeId\": \"AC47CBD8-630C-4616-B11D-8B0A454098FD\",\r\n    \"CurrencyId\": \"FC3A0BA5-0507-455D-ADCE-429F35979B91\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-url}}/CustomerManagement/Customer",
+									"host": [
+										"{{api-url}}"
+									],
+									"path": [
+										"CustomerManagement",
+										"Customer"
+									]
+								}
+							},
+							"status": "Conflict",
+							"code": 409,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 07 Aug 2022 19:11:37 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": [\n        {\n            \"fieldName\": \"Email\",\n            \"errorCode\": \"EmailUsed\",\n            \"errorMessage\": \"Email already used\"\n        },\n        {\n            \"fieldName\": \"IdentityCardNo\",\n            \"errorCode\": \"IdentityUsed\",\n            \"errorMessage\": \"Identity number already used\"\n        },\n        {\n            \"fieldName\": \"Mobile\",\n            \"errorCode\": \"MobileUsed\",\n            \"errorMessage\": \"Mobil already used\"\n        }\n    ],\n    \"responsedata\": null\n}"
+						},
+						{
+							"name": "Fail-> IBAN number Generation",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"FullName\": \"Customer B\",\r\n    \"Email\": \"customerB@gmail.com\",\r\n    \"MobileCode\": \"+95\",\r\n    \"Mobile\": \"111112\",\r\n    \"IdentityCardNo\": \"ID002\",\r\n    \"Password\": \"test12345\",\r\n    \"Status\": 1,\r\n    \"BankAccountTypeId\": \"AC47CBD8-630C-4616-B11D-8B0A454098FD\",\r\n    \"CurrencyId\": \"FC3A0BA5-0507-455D-ADCE-429F35979B91\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-url}}/CustomerManagement/Customer",
+									"host": [
+										"{{api-url}}"
+									],
+									"path": [
+										"CustomerManagement",
+										"Customer"
+									]
+								}
+							},
+							"status": "Service Unavailable",
+							"code": 503,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 07 Aug 2022 19:20:56 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": [\n        {\n            \"fieldName\": \"\",\n            \"errorCode\": \"IBANFailed\",\n            \"errorMessage\": \"Failed to generate IBAN Number\"\n        }\n    ],\n    \"responsedata\": null\n}"
+						},
+						{
+							"name": "Fail->Validation",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"FullName\": \"Customer B\",\r\n    \"Email\": \"\",\r\n    \"MobileCode\": \"+95\",\r\n    \"Mobile\": \"111112\",\r\n    \"IdentityCardNo\": \"ID002\",\r\n    \"Password\": \"test12345\",\r\n    \"Status\": 1,\r\n    \"BankAccountTypeId\": \"AC47CBD8-630C-4616-B11D-8B0A454098FD\",\r\n    \"CurrencyId\": \"FC3A0BA5-0507-455D-ADCE-429F35979B91\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-url}}/CustomerManagement/Customer",
+									"host": [
+										"{{api-url}}"
+									],
+									"path": [
+										"CustomerManagement",
+										"Customer"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/problem+json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 07 Aug 2022 19:21:48 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.1\",\n    \"title\": \"One or more validation errors occurred.\",\n    \"status\": 400,\n    \"traceId\": \"0HMJOL7CU29SL:00000003\",\n    \"errors\": {\n        \"Email\": [\n            \"Email is required\"\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"CustomerId\": \"30FF8F3E-FE3C-4266-A119-5B44F30AF3AD\",\r\n    \"FullName\": \"Customer B edit\",\r\n    \"Email\": \"customerB@gmail.com\",\r\n    \"MobileCode\": \"+95\",\r\n    \"Mobile\": \"09876\",\r\n    \"IdentityCardNo\": \"ID002\",\r\n    \"Status\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-url}}/CustomerManagement/Customer",
+							"host": [
+								"{{api-url}}"
+							],
+							"path": [
+								"CustomerManagement",
+								"Customer"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Fail-> Validation",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"CustomerId \": \"\",\r\n    \"FullName \": \"\",\r\n    \"Email \": \"\",\r\n    \"MobileCode \": \"\",\r\n    \"Mobile \": \"\",\r\n    \"IdentityCardNo \": \"\",\r\n    \"Status \": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-url}}/CustomerManagement/Customer",
+									"host": [
+										"{{api-url}}"
+									],
+									"path": [
+										"CustomerManagement",
+										"Customer"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/problem+json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 07 Aug 2022 19:35:08 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.1\",\n    \"title\": \"One or more validation errors occurred.\",\n    \"status\": 400,\n    \"traceId\": \"0HMJOLCKJM3UB:00000009\",\n    \"errors\": {\n        \"Email\": [\n            \"Email is required\"\n        ],\n        \"Mobile\": [\n            \"Mobile number is required\"\n        ],\n        \"FullName\": [\n            \"The FullName field is required.\"\n        ],\n        \"MobileCode\": [\n            \"The MobileCode field is required.\"\n        ],\n        \"IdentityCardNo\": [\n            \"Identity Card number is required\"\n        ]\n    }\n}"
+						},
+						{
+							"name": "Fail -> No Customer",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"CustomerId\": \"30FF8F3E-FE3C-4266-A119-5B44F30AF3AA\",\r\n    \"FullName\": \"Customer B edit\",\r\n    \"Email\": \"customerB@gmail.com\",\r\n    \"MobileCode\": \"+95\",\r\n    \"Mobile\": \"09876\",\r\n    \"IdentityCardNo\": \"ID002\",\r\n    \"Status\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-url}}/CustomerManagement/Customer",
+									"host": [
+										"{{api-url}}"
+									],
+									"path": [
+										"CustomerManagement",
+										"Customer"
+									]
+								}
+							},
+							"status": "Conflict",
+							"code": 409,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 07 Aug 2022 19:39:57 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": [\n        {\n            \"fieldName\": \"\",\n            \"errorCode\": \"CustomerNF\",\n            \"errorMessage\": \"Customer not found\"\n        }\n    ],\n    \"responsedata\": null\n}"
+						},
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"CustomerId\": \"30FF8F3E-FE3C-4266-A119-5B44F30AF3AD\",\r\n    \"FullName\": \"Customer B edit\",\r\n    \"Email\": \"customerB@gmail.com\",\r\n    \"MobileCode\": \"+95\",\r\n    \"Mobile\": \"09876\",\r\n    \"IdentityCardNo\": \"ID002\",\r\n    \"Status\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-url}}/CustomerManagement/Customer",
+									"host": [
+										"{{api-url}}"
+									],
+									"path": [
+										"CustomerManagement",
+										"Customer"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 07 Aug 2022 19:41:09 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": null,\n    \"responsedata\": {\n        \"customerId\": \"30ff8f3e-fe3c-4266-a119-5b44f30af3ad\",\n        \"fullName\": \"Customer B edit\",\n        \"email\": \"customerB@gmail.com\",\n        \"mobileCode\": \"+95\",\n        \"mobile\": \"09876\",\n        \"identityCardNo\": \"ID002\",\n        \"status\": 1\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "GeneralResponse",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": [
+				{
+					"name": "UnAuthorize",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"CustomerId \": \"\",\r\n    \"FullName \": \"\",\r\n    \"Email \": \"\",\r\n    \"MobileCode \": \"\",\r\n    \"Mobile \": \"\",\r\n    \"IdentityCardNo \": \"\",\r\n    \"Status \": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-url}}/CustomerManagement/Customer",
+							"host": [
+								"{{api-url}}"
+							],
+							"path": [
+								"CustomerManagement",
+								"Customer"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 07 Aug 2022 19:29:44 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "WWW-Authenticate",
+							"value": "Bearer"
+						}
+					],
+					"cookie": [],
+					"body": "{\"Error\":[{\"FieldName\":\"\",\"ErrorCode\":\"UnAuthorize\",\"ErrorMessage\":\"Invalid Token or Token Expire!\"}],\"Responsedata\":null}"
+				},
+				{
+					"name": "Internal Server Error",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"FullName\": \"Customer B\",\r\n    \"Email\": \"customerB@gmail.com\",\r\n    \"MobileCode\": \"+95\",\r\n    \"Mobile\": \"111112\",\r\n    \"IdentityCardNo\": \"ID002\",\r\n    \"Password\": \"test12345\",\r\n    \"Status\": 1,\r\n    \"BankAccountTypeId\": \"AC47CBD8-630C-4616-B11D-8B0A454098FD\",\r\n    \"CurrencyId\": \"FC3A0BA5-0507-455D-ADCE-429F35979B91\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-url}}/CustomerManagement/Customer",
+							"host": [
+								"{{api-url}}"
+							],
+							"path": [
+								"CustomerManagement",
+								"Customer"
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 07 Aug 2022 19:35:40 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache,no-store"
+						},
+						{
+							"key": "Expires",
+							"value": "-1"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"Error\": [\n        {\n            \"FieldName\": \"\",\n            \"ErrorCode\": \"IntSevEr\",\n            \"ErrorMessage\": \"Internal server error!\"\n        }\n    ],\n    \"Responsedata\": null\n}"
+				}
+			]
+		}
+	]
+}
