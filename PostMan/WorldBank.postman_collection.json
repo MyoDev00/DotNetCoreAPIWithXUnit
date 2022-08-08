@@ -475,6 +475,381 @@
 			]
 		},
 		{
+			"name": "BankService",
+			"item": [
+				{
+					"name": "Deposit",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"CustomerId\":\"BAB6F619-192A-4C79-A627-9AF76E28518C\",\r\n    \"BankAccountId\":\"EDF93931-1E87-4395-96F7-FA6FA54782D2\",\r\n    \"Amount\":0,\r\n    \"Note\":\"note\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-url}}/BankService/Deposit",
+							"host": [
+								"{{api-url}}"
+							],
+							"path": [
+								"BankService",
+								"Deposit"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Fail->Account inactive",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"CustomerId\":\"BAB6F619-192A-4C79-A627-9AF76E28518C\",\r\n    \"BankAccountId\":\"EDF93931-1E87-4395-96F7-FA6FA54782D3\",\r\n    \"Amount\":100,\r\n    \"Note\":\"note\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-url}}/BankService/Deposit",
+									"host": [
+										"{{api-url}}"
+									],
+									"path": [
+										"BankService",
+										"Deposit"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 08 Aug 2022 16:22:57 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": [\n        {\n            \"fieldName\": \"\",\n            \"errorCode\": \"AccountInactive\",\n            \"errorMessage\": \"Customer or bank account is inactive!\"\n        }\n    ],\n    \"responsedata\": null\n}"
+						},
+						{
+							"name": "Fail->Invalid Amount",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"CustomerId\":\"BAB6F619-192A-4C79-A627-9AF76E28518C\",\r\n    \"BankAccountId\":\"EDF93931-1E87-4395-96F7-FA6FA54782D2\",\r\n    \"Amount\":0,\r\n    \"Note\":\"note\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-url}}/BankService/Deposit",
+									"host": [
+										"{{api-url}}"
+									],
+									"path": [
+										"BankService",
+										"Deposit"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 08 Aug 2022 16:23:49 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": [\n        {\n            \"fieldName\": \"Amount\",\n            \"errorCode\": \"InvalidAmount\",\n            \"errorMessage\": \"Inavlid Amount!\"\n        }\n    ],\n    \"responsedata\": null\n}"
+						},
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"CustomerId\":\"BAB6F619-192A-4C79-A627-9AF76E28518C\",\r\n    \"BankAccountId\":\"EDF93931-1E87-4395-96F7-FA6FA54782D2\",\r\n    \"Amount\":1,\r\n    \"Note\":\"note\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-url}}/BankService/Deposit",
+									"host": [
+										"{{api-url}}"
+									],
+									"path": [
+										"BankService",
+										"Deposit"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 08 Aug 2022 16:29:04 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": null,\n    \"responsedata\": {\n        \"customerId\": \"bab6f619-192a-4c79-a627-9af76e28518c\",\n        \"bankAccountId\": \"edf93931-1e87-4395-96f7-fa6fa54782d2\",\n        \"transactionId\": \"55f3801b-c629-4755-bc4f-4f97339f92f0\",\n        \"transactionNo\": \"000000000000000000000000000004\",\n        \"closingBalance\": 0.999,\n        \"totalCredit\": 0,\n        \"totalDebit\": 0.999,\n        \"charges\": 0.001,\n        \"updatedOn\": \"2022-08-08T23:28:55.2126363+07:00\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Transfer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"CustomerId\":\"BAB6F619-192A-4C79-A627-9AF76E28518C\",\r\n    \"BankAccountId\":\"EDF93931-1E87-4395-96F7-FA6FA54782D2\",\r\n    \"ReceiverCustomerId\":\"30ff8f3e-fe3c-4266-a119-5b44f30af3ad\",\r\n    \"ReceiverBankAccountId\":\"e2fe3066-bd4c-43bc-b39b-c18f1a880479\",\r\n    \"Note\":\"test\",\r\n    \"Amount\":100\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-url}}/BankService/FundTransfer",
+							"host": [
+								"{{api-url}}"
+							],
+							"path": [
+								"BankService",
+								"FundTransfer"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Fail->Inavalid Amount",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"CustomerId\":\"BAB6F619-192A-4C79-A627-9AF76E28518C\",\r\n    \"BankAccountId\":\"EDF93931-1E87-4395-96F7-FA6FA54782D2\",\r\n    \"ReceiverCustomerId\":\"30ff8f3e-fe3c-4266-a119-5b44f30af3ad\",\r\n    \"ReceiverBankAccountId\":\"e2fe3066-bd4c-43bc-b39b-c18f1a880479\",\r\n    \"Note\":\"test\",\r\n    \"Amount\":0\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-url}}/BankService/FundTransfer",
+									"host": [
+										"{{api-url}}"
+									],
+									"path": [
+										"BankService",
+										"FundTransfer"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 08 Aug 2022 16:34:41 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": [\n        {\n            \"fieldName\": \"Amount\",\n            \"errorCode\": \"InvalidAmount\",\n            \"errorMessage\": \"Inavlid Amount!\"\n        }\n    ],\n    \"responsedata\": null\n}"
+						},
+						{
+							"name": "Fail-> Not Enough Balance",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"CustomerId\":\"BAB6F619-192A-4C79-A627-9AF76E28518C\",\r\n    \"BankAccountId\":\"EDF93931-1E87-4395-96F7-FA6FA54782D2\",\r\n    \"ReceiverCustomerId\":\"30ff8f3e-fe3c-4266-a119-5b44f30af3ad\",\r\n    \"ReceiverBankAccountId\":\"e2fe3066-bd4c-43bc-b39b-c18f1a880479\",\r\n    \"Note\":\"test\",\r\n    \"Amount\":10000000\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-url}}/BankService/FundTransfer",
+									"host": [
+										"{{api-url}}"
+									],
+									"path": [
+										"BankService",
+										"FundTransfer"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 08 Aug 2022 16:35:05 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": [\n        {\n            \"fieldName\": \"Amount\",\n            \"errorCode\": \"NotEnoughBalance\",\n            \"errorMessage\": \"Not Enough Balance.\"\n        }\n    ],\n    \"responsedata\": null\n}"
+						},
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"CustomerId\":\"BAB6F619-192A-4C79-A627-9AF76E28518C\",\r\n    \"BankAccountId\":\"EDF93931-1E87-4395-96F7-FA6FA54782D2\",\r\n    \"ReceiverCustomerId\":\"30ff8f3e-fe3c-4266-a119-5b44f30af3ad\",\r\n    \"ReceiverBankAccountId\":\"e2fe3066-bd4c-43bc-b39b-c18f1a880479\",\r\n    \"Note\":\"test\",\r\n    \"Amount\":100\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-url}}/BankService/FundTransfer",
+									"host": [
+										"{{api-url}}"
+									],
+									"path": [
+										"BankService",
+										"FundTransfer"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 08 Aug 2022 16:35:59 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": null,\n    \"responsedata\": {\n        \"transactionId\": \"4a8c2193-efee-4c97-a937-a425a7b3dffd\",\n        \"transactionNo\": \"000000000000000000000000000007\",\n        \"amount\": 100,\n        \"charges\": 0\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
 			"name": "GeneralResponse",
 			"request": {
 				"method": "GET",
