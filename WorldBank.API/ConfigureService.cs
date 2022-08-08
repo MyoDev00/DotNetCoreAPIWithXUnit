@@ -79,6 +79,7 @@ namespace Microsoft.Extensions.DependencyInjection
             
             services.AddTransient<IAuthenticationBL, AuthenticationBL>();
             services.AddTransient<ICustomerBL, CustomerBL>();
+            services.AddTransient<IBankServiceBL, BankServiceBL>();
             #endregion
             return services;
         }
