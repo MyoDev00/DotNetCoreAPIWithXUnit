@@ -70,7 +70,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"FullName\": \"Customer B\",\r\n    \"Email\": \"customerB@gmail.com\",\r\n    \"MobileCode\": \"+95\",\r\n    \"Mobile\": \"111112\",\r\n    \"IdentityCardNo\": \"ID002\",\r\n    \"Password\": \"test12345\",\r\n    \"Status\": 1,\r\n    \"BankAccountTypeId\": \"AC47CBD8-630C-4616-B11D-8B0A454098FD\",\r\n    \"CurrencyId\": \"FC3A0BA5-0507-455D-ADCE-429F35979B91\"\r\n}",
+							"raw": "{\r\n    \"FullName\": \"Customer C\",\r\n    \"Email\": \"customerD@gmail.com\",\r\n    \"MobileCode\": \"+95\",\r\n    \"Mobile\": \"111114\",\r\n    \"IdentityCardNo\": \"ID004\",\r\n    \"Password\": \"test12345\",\r\n    \"Status\": 1,\r\n    \"BankAccountTypeId\": \"AC47CBD8-630C-4616-B11D-8B0A454098FD\",\r\n    \"CurrencyId\": \"FC3A0BA5-0507-455D-ADCE-429F35979B91\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -471,6 +471,207 @@
 							"body": "{\n    \"error\": null,\n    \"responsedata\": {\n        \"customerId\": \"30ff8f3e-fe3c-4266-a119-5b44f30af3ad\",\n        \"fullName\": \"Customer B edit\",\n        \"email\": \"customerB@gmail.com\",\n        \"mobileCode\": \"+95\",\n        \"mobile\": \"09876\",\n        \"identityCardNo\": \"ID002\",\n        \"status\": 1\n    }\n}"
 						}
 					]
+				},
+				{
+					"name": "GetList",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api-url}}/CustomerManagement/Customer?pageIndex=1&pageSize=10&searchString=Customer A",
+							"host": [
+								"{{api-url}}"
+							],
+							"path": [
+								"CustomerManagement",
+								"Customer"
+							],
+							"query": [
+								{
+									"key": "pageIndex",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								},
+								{
+									"key": "searchString",
+									"value": "Customer A"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api-url}}/CustomerManagement/Customer?pageIndex=1&pageSize=10&searchString=",
+									"host": [
+										"{{api-url}}"
+									],
+									"path": [
+										"CustomerManagement",
+										"Customer"
+									],
+									"query": [
+										{
+											"key": "pageIndex",
+											"value": "1"
+										},
+										{
+											"key": "pageSize",
+											"value": "10"
+										},
+										{
+											"key": "searchString",
+											"value": ""
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 09 Aug 2022 07:05:30 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": null,\n    \"responsedata\": {\n        \"customers\": [\n            {\n                \"customerId\": \"30ff8f3e-fe3c-4266-a119-5b44f30af3ad\",\n                \"fullName\": \"Customer B edit\",\n                \"createdOn\": \"2022-08-08T02:34:07.003\",\n                \"updatedOn\": \"2022-08-08T02:41:09.797\"\n            },\n            {\n                \"customerId\": \"bab6f619-192a-4c79-a627-9af76e28518c\",\n                \"fullName\": \"Customer A\",\n                \"createdOn\": \"2022-08-08T02:10:46.08\",\n                \"updatedOn\": \"2022-08-08T02:10:46.08\"\n            }\n        ],\n        \"pageSize\": 10,\n        \"pageIndex\": 1,\n        \"totalRecord\": 2,\n        \"totalPage\": 1,\n        \"hasNextPage\": false,\n        \"hasPreviousPage\": false\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Detail",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api-url}}/CustomerManagement/Customer/4b877725-17e6-4840-b5ab-ebfea1402d22",
+							"host": [
+								"{{api-url}}"
+							],
+							"path": [
+								"CustomerManagement",
+								"Customer",
+								"4b877725-17e6-4840-b5ab-ebfea1402d22"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api-url}}/CustomerManagement/Customer/bab6f619-192a-4c79-a627-9af76e28518c",
+									"host": [
+										"{{api-url}}"
+									],
+									"path": [
+										"CustomerManagement",
+										"Customer",
+										"bab6f619-192a-4c79-a627-9af76e28518c"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 09 Aug 2022 07:16:44 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": null,\n    \"responsedata\": {\n        \"customerId\": \"bab6f619-192a-4c79-a627-9af76e28518c\",\n        \"fullName\": \"Customer A\",\n        \"email\": \"customerA@gmail.com\",\n        \"mobileCode\": \"+95\",\n        \"mobile\": \"11111\",\n        \"identityCardNo\": \"ID001\",\n        \"status\": 1,\n        \"bankAccounts\": [\n            {\n                \"bankAccountId\": \"edf93931-1e87-4395-96f7-fa6fa54782d2\",\n                \"ibanNumber\": \"NL81INGB5595284773\",\n                \"bankAccountTypeId\": \"ac47cbd8-630c-4616-b11d-8b0a454098fd\",\n                \"bankAccountType\": \"Saving\",\n                \"bankAccountTypeDescription\": \"Saving Account\",\n                \"closingBalance\": 899,\n                \"currencyId\": \"fc3a0ba5-0507-455d-adce-429f35979b91\",\n                \"currencySymbol\": \"฿\",\n                \"currencyDescryption\": \"Thai Baht\",\n                \"status\": 1\n            }\n        ]\n    }\n}"
+						},
+						{
+							"name": "Fail -> No Content",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api-url}}/CustomerManagement/Customer/bab6f619-192a-4c79-a627-9af76e28518e",
+									"host": [
+										"{{api-url}}"
+									],
+									"path": [
+										"CustomerManagement",
+										"Customer",
+										"bab6f619-192a-4c79-a627-9af76e28518e"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 09 Aug 2022 07:26:46 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
 				}
 			]
 		},
@@ -844,6 +1045,80 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"error\": null,\n    \"responsedata\": {\n        \"transactionId\": \"4a8c2193-efee-4c97-a937-a425a7b3dffd\",\n        \"transactionNo\": \"000000000000000000000000000007\",\n        \"amount\": 100,\n        \"charges\": 0\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Master Data",
+			"item": [
+				{
+					"name": "Get Master Data",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api-url}}/Data/MasterData",
+							"host": [
+								"{{api-url}}"
+							],
+							"path": [
+								"Data",
+								"MasterData"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api-url}}/Data/MasterData",
+									"host": [
+										"{{api-url}}"
+									],
+									"path": [
+										"Data",
+										"MasterData"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 09 Aug 2022 12:23:33 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": null,\n    \"responsedata\": {\n        \"transactionTypes\": [\n            {\n                \"transactionTypeId\": \"c77a687b-dc08-46b6-9013-3b26cc4f8a0a\",\n                \"transactionType\": \"BankDeposit\",\n                \"description\": \"Deposit\"\n            },\n            {\n                \"transactionTypeId\": \"7bfb58d6-ce24-4256-a263-4fe097f56408\",\n                \"transactionType\": \"FundTransfer\",\n                \"description\": \"Transfer\"\n            },\n            {\n                \"transactionTypeId\": \"d7788ad9-d369-4e4d-861f-b553e56e09d7\",\n                \"transactionType\": \"Received\",\n                \"description\": \"Received\"\n            },\n            {\n                \"transactionTypeId\": \"a64591fc-0083-4379-888b-e45942b91abd\",\n                \"transactionType\": \"Withdraw\",\n                \"description\": \"Withdraw\"\n            }\n        ],\n        \"bankAccountTypes\": [\n            {\n                \"bankAccountTypeId\": \"7188de5d-bce9-4b93-86dc-4a25f513c9ee\",\n                \"bankAccountType\": \"FixDeposit\",\n                \"description\": \"Fixed deposit account\"\n            },\n            {\n                \"bankAccountTypeId\": \"ac47cbd8-630c-4616-b11d-8b0a454098fd\",\n                \"bankAccountType\": \"Saving\",\n                \"description\": \"Saving Account\"\n            }\n        ],\n        \"currencies\": [\n            {\n                \"currencyId\": \"fc3a0ba5-0507-455d-adce-429f35979b91\",\n                \"currencyCode\": \"THB\",\n                \"currencySymbol\": \"฿\",\n                \"description\": \"Thai Baht\"\n            },\n            {\n                \"currencyId\": \"c25eaf80-61e9-48e0-9312-9babf6b128be\",\n                \"currencyCode\": \"USD\",\n                \"currencySymbol\": \"$\",\n                \"description\": \"United State Dollar\"\n            }\n        ],\n        \"auditTypes\": [\n            {\n                \"auditTypeId\": \"d5aecbcb-cb74-4fc5-badf-3eb1d7fa58aa\",\n                \"auditType\": \"BankDeposit\",\n                \"description\": \"Customer deposit to account\"\n            }\n        ]\n    }\n}"
 						}
 					]
 				}
