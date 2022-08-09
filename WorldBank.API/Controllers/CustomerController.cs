@@ -47,5 +47,31 @@ namespace WorldBank.API.Controllers
             else
                 return StatusCode(StatusCodes.Status409Conflict, response);
         }
+
+        [HttpGet]
+        [Route("Customer")]
+        [Authorize]
+        public async Task<IActionResult> GetCustomer([FromQuery] GetCustomersRequest request)
+        {
+            BaseResponse<GetCustomersResponse> response = await customerBL.GetCustomers(request);
+
+            if (response.Error == null)
+                return Ok(response);
+            else
+                return NoContent();
+        }
+
+        [HttpGet]
+        [Route("Customer/{customerId}")]
+        [Authorize]
+        public async Task<IActionResult> GetCustomerDetail(string customerId)
+        {
+            BaseResponse<GetCustomerDetailResponse> response = await customerBL.GetCustomerDetail(Guid.Parse(customerId));
+
+            if (response.Error == null)
+                return Ok(response);
+            else
+                return NoContent();
+        }
     }
 }

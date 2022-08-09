@@ -14,8 +14,11 @@ namespace WorldBank.API.Business
 {
     public interface ICustomerBL
     {
+        public Task<BaseResponse<GetCustomersResponse>> GetCustomers(GetCustomersRequest request);
+        public Task<BaseResponse<GetCustomerDetailResponse>> GetCustomerDetail(Guid customerId);
         public Task<BaseResponse<PostCustomerResponse>> PostCustomer(PostCustomerRequest request);
         public Task<BaseResponse<PutCustomerResponse>> PutCustomer(PutCustomerRequest request);
+
     }
     public class CustomerBL : ICustomerBL
     {
@@ -298,6 +301,129 @@ namespace WorldBank.API.Business
             }
 
            
+        }
+
+        public async Task<BaseResponse<GetCustomersResponse>> GetCustomers(GetCustomersRequest request)
+        {
+            var encryptedSearch = StringHelper.Encrypt(request.SearchString??"",encryptionKey);
+
+            var query = unitOfWork.GetRepository<Customer>()
+                        .Includes(x =>
+                        (string.IsNullOrEmpty(request.SearchString) ||
+                        (x.FullName == request.SearchString || x.Email == encryptedSearch || x.Mobile == encryptedSearch || x.IdentityCardNo == encryptedSearch)
+                        ), x => x.Include(c => c.BankAccount))
+                        .Select(x => new GetCustomersResponse.CustomerModel
+                        {
+                            CustomerId = x.CustomerId,
+                            FullName = x.FullName,
+                            CreatedOn = x.CreatedOn,
+                            UpdatedOn = x.UpdatedOn,
+                        });
+            var totalCount = query.Count();
+            if (!string.IsNullOrEmpty(request.OrderBy))
+            {
+                if (request.Order == "asc")
+                {
+                    switch (request.OrderBy.ToLower())
+                    {
+                        case "fullname":
+                            query.OrderBy(x => x.FullName);
+                            break;
+                        case "createdon":
+                            query.OrderBy(x => x.CreatedOn);
+                            break;
+                        case "updatedon":
+                        default:
+                            query.OrderBy(x => x.UpdatedOn);
+                            break;
+                    }
+                }
+                else
+                {
+                    switch (request.OrderBy.ToLower())
+                    {
+                        case "fullname":
+                            query.OrderByDescending(x => x.FullName);
+                            break;
+                        case "createdon":
+                            query.OrderByDescending(x => x.CreatedOn);
+                            break;
+                        case "updatedon":
+                        default:
+                            query.OrderByDescending(x => x.UpdatedOn);
+                            break;
+                    }
+                }
+            }
+
+            var paging = query.Skip(request.PageIndex - 1).Take(request.PageSize).ToList();
+            if (paging != null)
+            {
+                return new BaseResponse<GetCustomersResponse>()
+                {
+                    Responsedata = new GetCustomersResponse()
+                    {
+                        TotalRecord = totalCount,
+                        PageIndex = request.PageIndex,
+                        PageSize = request.PageSize,
+                        Customers = paging
+                    }
+                };
+            }
+            else
+            {
+                return new BaseResponse<GetCustomersResponse>(ErrorCode.NoContent, ErrorMessage.NoContent);
+            }
+
+        }
+
+        public async Task<BaseResponse<GetCustomerDetailResponse>> GetCustomerDetail(Guid customerId)
+        {
+            var bankAccountTypes = unitOfWork.GetRepository<BankAccountTypes>().GetAll();
+            var currencies = unitOfWork.GetRepository<Currency>().GetAll();
+
+            var customer = unitOfWork.GetRepository<Customer>()
+                .Includes(c => c.CustomerId == customerId, c => c.Include(b => b.BankAccount))
+                .FirstOrDefault();
+
+            if (customer != null)
+            {
+                var responseDetail = new GetCustomerDetailResponse
+                {
+                    CustomerId = customer.CustomerId,
+                    FullName = customer.FullName,
+                    Email = StringHelper.Decrypt(customer.Email, encryptionKey),
+                    IdentityCardNo = StringHelper.Decrypt(customer.IdentityCardNo, encryptionKey),
+                    MobileCode = customer.MobileCode,
+                    Mobile = StringHelper.Decrypt(customer.Mobile, encryptionKey),
+                    Status = customer.Status,
+                    BankAccounts = customer.BankAccount.Select(b => new BankAccountResponse
+                    {
+                        BankAccountId = b.BankAccountId,
+                        BankAccountTypeId = b.BankAccountTypeId,
+                        BankAccountType = bankAccountTypes.Where(t => t.BankAccountTypeId == b.BankAccountTypeId).Select(t => t.BankAccountType).FirstOrDefault(),
+                        BankAccountTypeDescription = bankAccountTypes.Where(t => t.BankAccountTypeId == b.BankAccountTypeId).Select(t => t.Description).FirstOrDefault(),
+                        CurrencyId = b.CurrencyId,
+                        CurrencyDescryption = currencies.Where(cr => cr.CurrencyId == b.CurrencyId).Select(cr => cr.Description).FirstOrDefault(),
+                        CurrencySymbol = currencies.Where(cr => cr.CurrencyId == b.CurrencyId).Select(cr => cr.CurrencySymbol).FirstOrDefault(),
+                        ClosingBalance = b.ClosingBalance,
+                        IBANNumber = b.IbanNumber,
+                        Status = b.Status
+
+                    }).ToList()
+
+                };
+                return new BaseResponse<GetCustomerDetailResponse>()
+                {
+                    Responsedata = responseDetail
+                };
+            }
+            else
+            {
+                return new BaseResponse<GetCustomerDetailResponse>(ErrorCode.NoContent, ErrorMessage.NoContent);
+            }
+            
+
         }
 
         #endregion
