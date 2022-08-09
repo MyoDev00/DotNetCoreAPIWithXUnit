@@ -14,6 +14,10 @@ namespace WorldBank.API.Helper
             CreateMap<BankAccount, BankAccountResponse>();
             CreateMap<Customer, PutCustomerResponse>();
             CreateMap<PutCustomerRequest, PutCustomerResponse>();
+            CreateMap<TransactionTypes, TransactionTypeResponse>().ReverseMap();
+            CreateMap<BankAccountTypes, BankAccountTypeResponse>().ReverseMap();
+            CreateMap<Currency,CurrencyResponse>().ReverseMap();
+            CreateMap<AuditTypes,AuditTypeResponse>().ReverseMap();
         }
     }
 }
