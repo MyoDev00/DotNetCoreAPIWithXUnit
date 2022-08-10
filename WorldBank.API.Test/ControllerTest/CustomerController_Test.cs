@@ -22,6 +22,7 @@ using static WorldBank.Shared.Constant.Constant;
 
 namespace WorldBank.API.Test.ControllerTest
 {
+    [Collection("ControllerIntegrationTest")]
     [TestCaseOrderer("WorldBank.API.Test.Helper.PriorityOrderer", "WorldBank.API.Test")]
     public class CustomerController_Test : IClassFixture<TestDatabaseFixture>
     {
