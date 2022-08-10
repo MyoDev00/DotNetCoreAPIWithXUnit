@@ -64,9 +64,9 @@ namespace WorldBank.API.Controllers
         [HttpGet]
         [Route("Customer/{customerId}")]
         [Authorize]
-        public async Task<IActionResult> GetCustomerDetail(string customerId)
+        public async Task<IActionResult> GetCustomerDetail(Guid customerId)
         {
-            BaseResponse<GetCustomerDetailResponse> response = await customerBL.GetCustomerDetail(Guid.Parse(customerId));
+            BaseResponse<GetCustomerDetailResponse> response = await customerBL.GetCustomerDetail(customerId);
 
             if (response.Error == null)
                 return Ok(response);
