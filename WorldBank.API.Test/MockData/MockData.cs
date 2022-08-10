@@ -28,13 +28,13 @@ namespace WorldBank.API.Test
             BankAccountTypes = new List<BankAccountTypes>{
                 new BankAccountTypes
                 {
-                    BankAccountTypeId = Guid.NewGuid(),
+                    BankAccountTypeId = Guid.Parse("3BF250C5-3C5F-4757-9DF1-C90085F968DE"),
                     BankAccountType="Saving",
                     Description="Saving Account"
                 },
                 new BankAccountTypes
                 {
-                    BankAccountTypeId = Guid.NewGuid(),
+                    BankAccountTypeId = Guid.Parse("AB99F7DD-CAAE-4224-9D63-076FF1DEDDDC"),
                     BankAccountType="FixDeposit",
                     Description="Fixed deposit account"
                 }

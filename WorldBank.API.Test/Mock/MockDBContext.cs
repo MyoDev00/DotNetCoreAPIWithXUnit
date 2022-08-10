@@ -11,23 +11,23 @@ using WorldBank.Entities.DataModel;
 
 namespace WorldBank.API.Test.Mock
 {
-    public class TestDBContext : WorldBankDBContext
-    {
-        public TestDBContext()
-        {
+    //public class TestDBContext : WorldBankDBContext
+    //{
+    //    public TestDBContext()
+    //    {
 
-        }
+    //    }
 
-        public virtual DbSet<BankAccount> BankAccount { get; set; }
-        public virtual DbSet<BankAccountLedger> BankAccountLedger { get; set; }
-        public virtual DbSet<BankAccountTypes> BankAccountTypes { get; set; }
-        public virtual DbSet<Currency> Currency { get; set; }
-        public virtual DbSet<Customer> Customer { get; set; }
-        public int SaveChangesCount { get; private set; }
-        public int SaveChanges()
-        {
-            SaveChangesCount++;
-            return 1;
-        }
-    }
+    //    public virtual DbSet<BankAccount> BankAccount { get; set; }
+    //    public virtual DbSet<BankAccountLedger> BankAccountLedger { get; set; }
+    //    public virtual DbSet<BankAccountTypes> BankAccountTypes { get; set; }
+    //    public virtual DbSet<Currency> Currency { get; set; }
+    //    public virtual DbSet<Customer> Customer { get; set; }
+    //    public int SaveChangesCount { get; private set; }
+    //    public int SaveChanges()
+    //    {
+    //        SaveChangesCount++;
+    //        return 1;
+    //    }
+    //}
 }
