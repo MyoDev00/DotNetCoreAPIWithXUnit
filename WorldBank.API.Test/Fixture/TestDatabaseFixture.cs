@@ -12,7 +12,7 @@ namespace WorldBank.API.Test.Fixture
 {
     public class TestDatabaseFixture:IDisposable
     {
-        private const string ConnectionString = @"Data Source=LAPTOP-UL22A35E\HTETLIN;Initial Catalog=world_bank;User ID=sa;Password=codigo180;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;Pooling=True;";
+        private const string ConnectionString = @"Data Source=LAPTOP-UL22A35E\HTETLIN;Initial Catalog=world_bank_test;User ID=sa;Password=codigo180;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;Pooling=True;";
 
         private static readonly object _lock = new();
         private static bool _databaseInitialized;
