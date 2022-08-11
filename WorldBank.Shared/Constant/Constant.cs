@@ -29,6 +29,8 @@ namespace WorldBank.Shared.Constant
             public const string InvalidAmount = "InvalidAmount";
             public const string AcoountIsInactive = "AccountInactive";
             public const string NotEnoughBalance = "NotEnoughBalance";
+
+            public const string NoContent = "NoContent";
         }
 
         public struct ErrorMessage
@@ -46,6 +48,7 @@ namespace WorldBank.Shared.Constant
             public const string InvalidAmount = "Inavlid Amount!";
             public const string AcoountIsInactive = "Customer or bank account is inactive!";
             public const string NotEnoughBalance = "Not Enough Balance.";
+            public const string NoContent = "No Content";
         }
 
         public struct ErrorFieldName

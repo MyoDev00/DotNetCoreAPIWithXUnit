@@ -22,18 +22,19 @@ namespace WorldBank.API.Test
         public List<Transaction> Transactions { get; set; }
         public List<BankAccountLedger> BankAccountLedgers { get; set; }
         public List<StaffAuditLog> StaffAuditLogs { get; set; }
+        public List<Staff> Staff { get; set; }
         public MockData()
         {
             BankAccountTypes = new List<BankAccountTypes>{
                 new BankAccountTypes
                 {
-                    BankAccountTypeId = Guid.NewGuid(),
+                    BankAccountTypeId = Guid.Parse("3BF250C5-3C5F-4757-9DF1-C90085F968DE"),
                     BankAccountType="Saving",
                     Description="Saving Account"
                 },
                 new BankAccountTypes
                 {
-                    BankAccountTypeId = Guid.NewGuid(),
+                    BankAccountTypeId = Guid.Parse("AB99F7DD-CAAE-4224-9D63-076FF1DEDDDC"),
                     BankAccountType="FixDeposit",
                     Description="Fixed deposit account"
                 }
@@ -50,7 +51,8 @@ namespace WorldBank.API.Test
                 new Currency
                 {
                     CurrencyId = Guid.Parse("2D111111-1111-1111-1111-111111111111"),
-                    CurrencySymbol = "USD",
+                    CurrencyCode="USD",
+                    CurrencySymbol = "$",
                     Description = "United State Dollar"
                 },
             };
@@ -142,6 +144,8 @@ namespace WorldBank.API.Test
                     ,Status=(int)CommonStatus.Active
                     ,CreatedOn=DateTime.Now
                     ,UpdatedOn=DateTime.Now
+                    ,Password="ZB8Qr/BBCabIbKNo6uPBZ9VVi1M="
+                    ,SaltPassword="shHWTKuHhHEeWnUydFg3Gnlr30AfyTQ8"
                     ,BankAccount = new List<BankAccount>()
                     {
                         BankAccounts[0]
@@ -158,6 +162,8 @@ namespace WorldBank.API.Test
                     ,Status=(int)CommonStatus.Active
                     ,CreatedOn=DateTime.Now.AddDays(1)
                     ,UpdatedOn=DateTime.Now.AddDays(1)
+                    ,Password="ZB8Qr/BBCabIbKNo6uPBZ9VVi1M="
+                    ,SaltPassword="shHWTKuHhHEeWnUydFg3Gnlr30AfyTQ8"
                     ,BankAccount = new List<BankAccount>()
                     {
                         BankAccounts[1]
@@ -174,6 +180,8 @@ namespace WorldBank.API.Test
                     ,Status=(int)CommonStatus.Active
                     ,CreatedOn=DateTime.Now.AddDays(2)
                     ,UpdatedOn=DateTime.Now.AddDays(2)
+                    ,Password="ZB8Qr/BBCabIbKNo6uPBZ9VVi1M="
+                    ,SaltPassword="shHWTKuHhHEeWnUydFg3Gnlr30AfyTQ8"
                     ,BankAccount = new List<BankAccount>()
                     {
                         BankAccounts[2]
@@ -190,6 +198,8 @@ namespace WorldBank.API.Test
                     ,Status=(int)CommonStatus.Inactive
                     ,CreatedOn=DateTime.Now.AddDays(3)
                     ,UpdatedOn=DateTime.Now.AddDays(3)
+                    ,Password="ZB8Qr/BBCabIbKNo6uPBZ9VVi1M="
+                    ,SaltPassword="shHWTKuHhHEeWnUydFg3Gnlr30AfyTQ8"
                     ,BankAccount = new List<BankAccount>()
                     {
                         BankAccounts[3]
@@ -205,6 +215,8 @@ namespace WorldBank.API.Test
                     ,Status=(int)CommonStatus.Inactive
                     ,CreatedOn=DateTime.Now.AddDays(4)
                     ,UpdatedOn=DateTime.Now.AddDays(4)
+                    ,Password="ZB8Qr/BBCabIbKNo6uPBZ9VVi1M="
+                    ,SaltPassword="shHWTKuHhHEeWnUydFg3Gnlr30AfyTQ8"
                     ,BankAccount = new List<BankAccount>()
                     {
                         BankAccounts[4]
@@ -273,6 +285,20 @@ namespace WorldBank.API.Test
             Transactions = new List<Transaction>();
             BankAccountLedgers = new List<BankAccountLedger>();
             StaffAuditLogs = new List<StaffAuditLog>();
+            Staff = new List<Staff>()
+            {
+                new Staff
+                {
+                    StaffId = Guid.NewGuid(),
+                    LoginId = "Admin",
+                    FullName ="Admin",
+                    Password="ZB8Qr/BBCabIbKNo6uPBZ9VVi1M=",
+                    SaltPassword="shHWTKuHhHEeWnUydFg3Gnlr30AfyTQ8",
+                    Status = (int)CommonStatus.Active,
+                    CreatedOn = DateTime.Now,
+                    UpdatedOn = DateTime.Now,
+                }
+            };
         }
 
 
